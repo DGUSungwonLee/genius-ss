@@ -37,7 +37,7 @@ function mkAIProfile(i: number) {
   return {
     aggression: 0.35 + 0.35 * base,
     bluffRate: 0.20 + 0.25 * (1 - base),
-    challengeRate: 0.06 + 0.06 * base,
+    challengeRate: 0.10 + 0.12 * base,
     caution: 0.35 + 0.25 * (1 - base),
   };
 }
