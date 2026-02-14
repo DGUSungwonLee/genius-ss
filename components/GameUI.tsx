@@ -85,7 +85,7 @@ export default function GameUI() {
     if (state.phase === "GAME_OVER" || state.phase === "SETUP") return;
 
     // 사람 입력 단계면 자동 진행 X
-    if (isMyAttackTurn || isMyDefenseTurn || inChallenge) return;
+    if (isMyAttackTurn || isMyDefenseTurn) return;
 
     const t = setTimeout(() => {
       dispatch({ type: "AI_STEP" } as any);
