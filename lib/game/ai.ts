@@ -25,7 +25,7 @@ function clamp01(x: number) {
 function scaleByDifficulty(d: Difficulty) {
   switch (d) {
     case "EASY":
-      return { aggression: 0.85, bluff: 0.70, challenge: 0.55, caution: 1.10 };
+      return { aggression: 0.85, bluff: 0.70, challenge: 0.80, caution: 1.05 };
     case "HARD":
       return { aggression: 1.10, bluff: 1.05, challenge: 1.35, caution: 0.90 };
     default:
@@ -113,7 +113,7 @@ export function aiShouldChallenge(
   const actor = p(s, dec.actorId);
   if (actor.team === me.team) rate *= 0.55;
 
-  rate = Math.min(rate, difficulty === "HARD" ? 0.18 : difficulty === "EASY" ? 0.10 : 0.13);
+  rate = Math.min(rate, difficulty === "HARD" ? 0.18 : difficulty === "EASY" ? 0.14 : 0.22);
 
   return Math.random() < rate;
 }

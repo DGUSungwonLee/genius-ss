@@ -400,8 +400,8 @@ export function reduce(state: MatchState, action: Action): MatchState {
         if (!s.lastDeclaration) return s;
 
         // 사람(생존)이 있으면 멈추고 기다림
-        const humanAlive = s.players.some((x) => x.isHuman && x.alive);
-        if (humanAlive) return s;
+        //const humanAlive = s.players.some((x) => x.isHuman && x.alive);
+        //if (humanAlive) return s;
 
         const actorTeam = p(s, s.lastDeclaration!.actorId).team;
         const candidates = s.players.filter(
