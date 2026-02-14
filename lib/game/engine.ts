@@ -192,9 +192,14 @@ function applyDefenseAndResolve(s: MatchState) {
     return;
   }
 
+  const raw = cur-dmg;
   const next = Math.max(0, cur - dmg);
   s.shieldDurability[key] = next;
   logPush(s, `🛡️ ${pname(s, defenderId)} ${handKo(defDec.hand)} 방패 내구도 ${next}/3 (피해 ${dmg})`);
+  if (raw < 0) {
+    kill(s, defenderId, "방패 관통");
+    if(s.phase === "GAME_OVER") return;
+  }
   s.phase = "RESOLVE";
 }
 
