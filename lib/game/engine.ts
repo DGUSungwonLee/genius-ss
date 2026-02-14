@@ -326,12 +326,30 @@ export function reduce(state: MatchState, action: Action): MatchState {
     }
 
     case "CHALLENGE_PASS": {
-      if (!s.lastDeclaration) return s;
+  if (!s.lastDeclaration) return s;
 
-      logPush(s, "🟢 의심 없음");
-      transitionAfterChallenge(s);
-      return s;
+  // ✅ (중요) 넘기기 전에 AI들도 1회 의심 기회 부여
+  if (s.phase === "CHALLENGE_ATTACK" || s.phase === "CHALLENGE_DEFENSE") {
+    const candidates = s.players.filter(
+      (x) => x.alive && !x.isHuman && x.id !== s.lastDeclaration!.actorId
+    );
+
+    for (const c of candidates) {
+      if (aiShouldChallenge(s, c.id, s.lastDeclaration as Declaration, s.difficulty)) {
+        resolveChallenge(s, c.id);
+        if (s.winnerTeam) return s;
+
+        transitionAfterChallenge(s);
+        return s;
+      }
     }
+  }
+
+  // 아무도 의심 안 하면 진짜 넘기기
+  logPush(s, "🟢 의심 없음");
+  transitionAfterChallenge(s);
+  return s;
+}
 
     case "AI_STEP": {
       // AI 공격 선언
